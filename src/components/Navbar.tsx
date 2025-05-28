@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image'
+import Link from 'next/link';
+
 import { Moon, Sun, LayoutGrid, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
@@ -10,16 +13,27 @@ const Navbar = () => {
     <div className="w-full">
       {/* Top Header */}
       <div className="bg-gradient-to-r from-orange-400 via-white to-green-600 p-4 flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0">
-        <div className="flex items-center space-x-4">
-          <div className="bg-blue-900 text-white font-bold rounded-full w-14 h-14 md:w-16 md:h-16 flex items-center justify-center border-4 border-orange-300 text-lg">
-            IN
+        <div className="flex flex-col  space-x-4">
+          <div className='flex'>
+
+
+
+            <div className=" text-white font-bold w-40 h-14 md:w-26 md:h-16 flex items-center  ">
+            <Image src="/ERNET_India_logo.png" alt="eduroam Logo" width={120} height={120} className="" />
           </div>
+          <div className="eduroam  md:block">
+            <Image src="/eduroam_logo.png" alt="eduroam Logo" width={120} height={120} className="" />
+          </div> 
+
+          
+          </div> 
           <div>
-            <h1 className="text-xl md:text-2xl font-bold text-blue-900">eduroam India</h1>
+            {/* <h1 className="text-xl md:text-2xl font-bold text-blue-900">eduroam India</h1> */}
             <p className="text-gray-700 text-sm md:text-base font-medium">
-              Department of Electronics & Information Technology | Ministry of Communications & IT | Government of India
+              Department of Electronics & Information Technology | Ministry of Electronics & IT | Government of India
             </p>
           </div>
+          
         </div>
 
         {/* Buttons: A+, A-, Theme Toggle, Layout */}
@@ -42,15 +56,31 @@ const Navbar = () => {
       {/* Navigation Menu */}
       <nav className="bg-blue-900 text-white px-6 py-2">
         <ul className={`md:flex md:space-x-8 text-sm font-medium ${menuOpen ? 'block' : 'hidden'} md:block`}>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">Home</li>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">About eduroam</li>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">Participating Institutions</li>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">Configuration</li>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">Support</li>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">Downloads</li>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">Policies</li>
-          <li className="hover:underline py-2 md:py-0 cursor-pointer">Contact Us</li>
-        </ul>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/">Home</Link>
+  </li>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/about">About eduroam</Link>
+  </li>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/institutions">Participating Institutions</Link>
+  </li>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/configuration">Configuration</Link>
+  </li>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/support">Support</Link>
+  </li>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/downloads">Downloads</Link>
+  </li>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/policies">Policies</Link>
+  </li>
+  <li className="hover:underline py-2 md:py-0 cursor-pointer">
+    <Link href="/contact">Contact Us</Link>
+  </li>
+</ul>
       </nav>
     </div>
   );
