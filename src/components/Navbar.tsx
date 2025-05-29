@@ -30,7 +30,7 @@ const Navbar = () => {
           <div>
             {/* <h1 className="text-xl md:text-2xl font-bold text-blue-900">eduroam India</h1> */}
             <p className="text-gray-700 text-sm md:text-base font-medium">
-              Department of Electronics & Information Technology | Ministry of Electronics & IT | Government of India
+              Ministry of Electronics & Information Technology | Government of India
             </p>
           </div>
           
@@ -63,7 +63,7 @@ const Navbar = () => {
     <Link href="/about">About eduroam</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
-    <Link href="/institutions">Participating Institutions</Link>
+    <Link href="/institutions">Indian Presence</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
     <Link href="/configuration">Configuration</Link>
@@ -72,13 +72,13 @@ const Navbar = () => {
     <Link href="/support">Support</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
-    <Link href="/downloads">Downloads</Link>
+    <Link href="/downloads">Request Form</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
     <Link href="/policies">Policies</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
-    <Link href="/contact">Contact Us</Link>
+    <Link href="/contact_us">Contact Us</Link>
   </li>
 </ul>
       </nav>
