@@ -201,7 +201,7 @@ const Footer = () => {
                 {policies.map((policy, index) => (
                   <a
                     key={index}
-                    href="#"
+                    href="/privacy"
                     className="block text-blue-200 hover:text-white transition-colors text-sm"
                   >
                     {policy}

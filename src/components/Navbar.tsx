@@ -75,7 +75,7 @@ const Navbar = () => {
     <Link href="/downloads">Request Form</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
-    <Link href="/policies">Policies</Link>
+    <Link href="/privacy">Policies</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
     <Link href="/contact_us">Contact Us</Link>
