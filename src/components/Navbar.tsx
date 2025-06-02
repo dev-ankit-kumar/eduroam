@@ -72,7 +72,7 @@ const Navbar = () => {
     <Link href="/support">Support</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
-    <Link href="/downloads">Request Form</Link>
+    <Link href="/request">Request Form</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
     <Link href="/privacy">Policies</Link>
