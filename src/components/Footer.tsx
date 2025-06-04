@@ -67,35 +67,7 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-b from-blue-900 to-blue-800 text-white">
       {/* Newsletter Section */}
-      <div className="border-b border-blue-700">
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left">
-              <h3 className="text-xl font-bold mb-2 text-orange-400">
-                Stay Updated
-              </h3>
-              <p className="text-blue-200">
-                Get the latest updates on network status and new features.
-              </p>
-            </div>
-            <div className="flex gap-2 w-full max-w-sm">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
-              />
-              <button
-                onClick={handleSubscribe}
-                className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors flex items-center gap-2"
-              >
-                {subscribed ? 'Done!' : <Send className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Main Footer */}
       <div className="max-w-6xl mx-auto px-4 py-12">

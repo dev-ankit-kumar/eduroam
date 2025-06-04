@@ -66,7 +66,7 @@ const Navbar = () => {
     <Link href="/institutions">Indian Presence</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
-    <Link href="/configuration">Configuration</Link>
+    <Link href="/configurationPage">Configuration</Link>
   </li>
   <li className="hover:underline py-2 md:py-0 cursor-pointer">
     <Link href="/support">Support</Link>
