@@ -4,15 +4,16 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, Wifi, Shield, Settings, CheckCircle, AlertCircle, Copy, Terminal, Network } from 'lucide-react';
 
 const EduroamUbuntuConfig = () => {
-  const [expandedSections, setExpandedSections] = useState({});
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const [copiedText, setCopiedText] = useState('');
 
-  const toggleSection = (section) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
+ const toggleSection = (section: string) => {
+  setExpandedSections(prev => ({
+    ...prev,
+    [section]: !prev[section]
+  }));
+};
+
 
   const copyToClipboard = (text, label) => {
     navigator.clipboard.writeText(text);

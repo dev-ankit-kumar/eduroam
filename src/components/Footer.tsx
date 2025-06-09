@@ -15,68 +15,60 @@ import {
   FileText,
   Shield,
   Users,
-  Globe,
-  Send
+  Globe
 } from 'lucide-react';
 
 const Footer = () => {
-  const [openSection, setOpenSection] = useState(null);
+  const [openLinks, setOpenLinks] = useState(false);
+  const [openResources, setOpenResources] = useState(false);
+  const [openPolicies, setOpenPolicies] = useState(false);
   const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const toggleSection = (section) => {
-    setOpenSection(openSection === section ? null : section);
-  };
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const handleSubscribe = () => {
     if (email.trim()) {
-      setSubscribed(true);
+      setIsSubscribed(true);
       setEmail('');
-      setTimeout(() => setSubscribed(false), 3000);
+      setTimeout(() => setIsSubscribed(false), 3000);
     }
   };
 
   const quickLinks = [
-    { name: 'About eduroam', href: '#', icon: Users },
-    { name: 'Participating Institutions', href: '#', icon: Globe },
-    { name: 'Configuration Guide', href: '#', icon: FileText },
-    { name: 'Support Center', href: '#', icon: Shield }
+    { name: 'About eduroam', href: '#about', icon: Users },
+    { name: 'Participating Institutions', href: '#institutions', icon: Globe },
+    { name: 'Configuration Guide', href: '#guide', icon: FileText },
+    { name: 'Support Center', href: '#support', icon: Shield }
   ];
 
   const resources = [
-    { name: 'Download Certificates', href: '#', icon: Download },
-    { name: 'Network Statistics', href: '#', icon: FileText },
-    { name: 'Technical Documentation', href: '#', icon: ExternalLink },
-    { name: 'User Manual', href: '#', icon: FileText }
+    { name: 'Download Certificates', href: '#download', icon: Download },
+    { name: 'Network Statistics', href: '#stats', icon: FileText },
+    { name: 'Technical Documentation', href: '#docs', icon: ExternalLink },
+    { name: 'User Manual', href: '#manual', icon: FileText }
   ];
 
   const policies = [
-    'Privacy Policy',
-    'Terms of Service', 
-    'Cookie Policy',
-    'Accessibility Statement'
+    { name: 'Privacy Policy', href: '#privacy' },
+    { name: 'Terms of Service', href: '#terms' },
+    { name: 'Cookie Policy', href: '#cookies' },
+    { name: 'Accessibility Statement', href: '#accessibility' }
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: '#', name: 'Facebook' },
-    { icon: Twitter, href: '#', name: 'Twitter' },
-    { icon: Linkedin, href: '#', name: 'LinkedIn' },
-    { icon: Youtube, href: '#', name: 'YouTube' }
+    { icon: Facebook, href: '#facebook', name: 'Facebook' },
+    { icon: Twitter, href: '#twitter', name: 'Twitter' },
+    { icon: Linkedin, href: '#linkedin', name: 'LinkedIn' },
+    { icon: Youtube, href: '#youtube', name: 'YouTube' }
   ];
 
   return (
     <footer className="bg-gradient-to-b from-blue-900 to-blue-800 text-white">
-      {/* Newsletter Section */}
-      
-
-      {/* Main Footer */}
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center font-bold">
+              <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center font-bold text-white">
                 IN
               </div>
               <div>
@@ -91,18 +83,24 @@ const Footer = () => {
             
             <div className="space-y-3 text-sm">
               <div className="flex items-center gap-3 text-blue-200">
-                <Mail className="w-4 h-4 text-orange-400" />
-                <a href="mailto:support@eduroam.in" className="hover:text-white">
+                <Mail className="w-4 h-4 text-orange-400 flex-shrink-0" />
+                <a 
+                  href="mailto:support@eduroam.in" 
+                  className="hover:text-white transition-colors"
+                >
                   support@eduroam.in
                 </a>
               </div>
               <div className="flex items-center gap-3 text-blue-200">
-                <Phone className="w-4 h-4 text-orange-400" />
+                <Phone className="w-4 h-4 text-orange-400 flex-shrink-0" />
                 <span>+91-11-2649-4640</span>
               </div>
               <div className="flex items-start gap-3 text-blue-200">
-                <MapPin className="w-4 h-4 text-orange-400 mt-0.5" />
-                <span>Ministry of Communications & IT<br />Government of India</span>
+                <MapPin className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
+                <span>
+                  Ministry of Communications & IT<br />
+                  Government of India
+                </span>
               </div>
             </div>
           </div>
@@ -110,13 +108,18 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <button 
-              onClick={() => toggleSection('links')}
+              onClick={() => setOpenLinks(!openLinks)}
               className="flex items-center justify-between w-full md:cursor-default"
+              type="button"
             >
               <h4 className="font-semibold mb-4 text-orange-400">Quick Links</h4>
-              <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'links' ? 'rotate-180' : ''}`} />
+              <ChevronDown 
+                className={`w-4 h-4 md:hidden transition-transform duration-200 ${
+                  openLinks ? 'rotate-180' : ''
+                }`} 
+              />
             </button>
-            <div className={`space-y-3 ${openSection === 'links' ? 'block' : 'hidden'} md:block`}>
+            <div className={`space-y-3 ${openLinks ? 'block' : 'hidden'} md:block`}>
               {quickLinks.map((link, index) => {
                 const IconComponent = link.icon;
                 return (
@@ -125,8 +128,8 @@ const Footer = () => {
                     href={link.href}
                     className="flex items-center gap-3 text-blue-200 hover:text-white transition-colors text-sm group"
                   >
-                    <IconComponent className="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform" />
-                    {link.name}
+                    <IconComponent className="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform duration-200" />
+                    <span>{link.name}</span>
                   </a>
                 );
               })}
@@ -136,13 +139,18 @@ const Footer = () => {
           {/* Resources */}
           <div>
             <button 
-              onClick={() => toggleSection('resources')}
+              onClick={() => setOpenResources(!openResources)}
               className="flex items-center justify-between w-full md:cursor-default"
+              type="button"
             >
               <h4 className="font-semibold mb-4 text-orange-400">Resources</h4>
-              <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'resources' ? 'rotate-180' : ''}`} />
+              <ChevronDown 
+                className={`w-4 h-4 md:hidden transition-transform duration-200 ${
+                  openResources ? 'rotate-180' : ''
+                }`} 
+              />
             </button>
-            <div className={`space-y-3 ${openSection === 'resources' ? 'block' : 'hidden'} md:block`}>
+            <div className={`space-y-3 ${openResources ? 'block' : 'hidden'} md:block`}>
               {resources.map((resource, index) => {
                 const IconComponent = resource.icon;
                 return (
@@ -151,8 +159,8 @@ const Footer = () => {
                     href={resource.href}
                     className="flex items-center gap-3 text-blue-200 hover:text-white transition-colors text-sm group"
                   >
-                    <IconComponent className="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform" />
-                    {resource.name}
+                    <IconComponent className="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform duration-200" />
+                    <span>{resource.name}</span>
                   </a>
                 );
               })}
@@ -162,21 +170,26 @@ const Footer = () => {
           {/* Policies & Social */}
           <div>
             <button 
-              onClick={() => toggleSection('policies')}
+              onClick={() => setOpenPolicies(!openPolicies)}
               className="flex items-center justify-between w-full md:cursor-default"
+              type="button"
             >
               <h4 className="font-semibold mb-4 text-orange-400">Legal & Connect</h4>
-              <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'policies' ? 'rotate-180' : ''}`} />
+              <ChevronDown 
+                className={`w-4 h-4 md:hidden transition-transform duration-200 ${
+                  openPolicies ? 'rotate-180' : ''
+                }`} 
+              />
             </button>
-            <div className={`${openSection === 'policies' ? 'block' : 'hidden'} md:block`}>
+            <div className={`${openPolicies ? 'block' : 'hidden'} md:block`}>
               <div className="space-y-3 mb-6">
                 {policies.map((policy, index) => (
                   <a
                     key={index}
-                    href="/privacy"
+                    href={policy.href}
                     className="block text-blue-200 hover:text-white transition-colors text-sm"
                   >
-                    {policy}
+                    {policy.name}
                   </a>
                 ))}
               </div>
@@ -190,7 +203,7 @@ const Footer = () => {
                       <a
                         key={index}
                         href={social.href}
-                        className="w-8 h-8 bg-white/10 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors"
+                        className="w-8 h-8 bg-white/10 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors duration-200"
                         aria-label={social.name}
                       >
                         <IconComponent className="w-4 h-4" />
@@ -199,6 +212,38 @@ const Footer = () => {
                   })}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Newsletter Section */}
+        <div className="mt-12 pt-8 border-t border-blue-700">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <h4 className="font-semibold text-orange-400 mb-2">Stay Updated</h4>
+              <p className="text-blue-200 text-sm">
+                Get the latest updates about eduroam services and announcements.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="px-4 py-2 rounded-lg bg-white/10 border border-blue-600 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+              />
+              <button
+                onClick={handleSubscribe}
+                type="button"
+                className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                  isSubscribed 
+                    ? 'bg-green-500 text-white' 
+                    : 'bg-orange-500 hover:bg-orange-600 text-white'
+                }`}
+              >
+                {isSubscribed ? 'Subscribed!' : 'Subscribe'}
+              </button>
             </div>
           </div>
         </div>
@@ -218,6 +263,7 @@ const Footer = () => {
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                 <span>Network Online</span>
               </div>
+              <span>•</span>
               <span>99.9% Uptime</span>
             </div>
           </div>
