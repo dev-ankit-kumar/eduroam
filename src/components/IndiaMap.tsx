@@ -9,9 +9,8 @@ interface Institute {
   name: string;
   city: string;
   state: string;
-  coordinates: [number, number]; // [longitude, latitude]
+  coordinates: number[]; // Changed from [number, number] to number[]
 }
-
 interface StateInfo {
   name: string;
   coordinates: [number, number];
@@ -2087,7 +2086,15 @@ const IndianInstitutesMap: React.FC = () => {
                         stroke="#fff"
                         strokeWidth="2"
                         className="cursor-pointer hover:r-6 transition-all duration-200 drop-shadow-sm"
-                        onClick={() => setSelectedInstitute(institute)}
+                        onClick={() =>
+                          setSelectedInstitute({
+                            ...institute,
+                            coordinates: institute.coordinates as [
+                              number,
+                              number
+                            ],
+                          })
+                        }
                         onMouseEnter={() => setHoveredState(institute.state)}
                         onMouseLeave={() => setHoveredState(null)}
                       />
@@ -2235,7 +2242,6 @@ const IndianInstitutesMap: React.FC = () => {
                       </div>
                     </div>
                   ))}
-                  
                 </div>
               </div>
             )}
