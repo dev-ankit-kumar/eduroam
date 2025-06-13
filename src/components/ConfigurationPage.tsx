@@ -5,20 +5,20 @@ import {
   ChevronDown,
   ChevronRight,
   Wifi,
-  Shield,
   Settings,
   CheckCircle,
   AlertCircle,
   Copy,
   Terminal,
   Network,
+  Download,
 } from "lucide-react";
 
 interface ConfigSectionProps {
   title: string;
   children: React.ReactNode;
   id: string;
-  icon: React.ComponentType<any>; // or more specific icon type if you know it
+  icon: React.ComponentType<any>;
 }
 
 interface CodeBlockProps {
@@ -43,6 +43,16 @@ const EduroamUbuntuConfig = () => {
     navigator.clipboard.writeText(text);
     setCopiedText(label);
     setTimeout(() => setCopiedText(""), 2000);
+  };
+
+  const downloadPDF = () => {
+    // Download PDF from public folder
+   const link = document.createElement('a');
+        link.href = '/eduroam-installation-manual.pdf';
+        link.download = 'eduroam-installation-manual.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
   };
 
   const ConfigSection = ({ title, children, id, icon: Icon }: ConfigSectionProps) => (
@@ -86,6 +96,17 @@ const EduroamUbuntuConfig = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
+        {/* Download Button - Top Left */}
+        <div className="mb-6">
+          <button
+            onClick={downloadPDF}
+            className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-200 font-medium"
+          >
+            <Download className="w-5 h-5" />
+            <span>Download complete Installation Guide</span>
+          </button>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
