@@ -16,22 +16,26 @@ const Navbar = () => {
         <div className="flex flex-col  space-x-4">
           <div className="flex">
             <div className=" text-white font-bold w-40 h-14 md:w-26 md:h-16 flex items-center  ">
-              <Image
+              <a href="/homepage">
+                <Image
                 src="/ERNET_India_logo.png"
                 alt="eduroam Logo"
                 width={120}
                 height={120}
                 className=""
               />
+              </a>
             </div>
             <div className="eduroam  md:block">
-              <Image
+              <a href="/homepage">
+                <Image
                 src="/eduroam_logo.png"
                 alt="eduroam Logo"
                 width={120}
                 height={120}
                 className=""
               />
+              </a>
             </div>
           </div>
           <div>

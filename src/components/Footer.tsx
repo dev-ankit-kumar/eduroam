@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ChevronDown, 
   Mail, 
@@ -24,6 +24,12 @@ const Footer = () => {
   const [openPolicies, setOpenPolicies] = useState(false);
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Fix hydration by ensuring client-side only rendering for dynamic content
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSubscribe = () => {
     if (email.trim()) {
@@ -33,25 +39,115 @@ const Footer = () => {
     }
   };
 
+  // Option 1: Generate a sample PDF content as text file (for demonstration)
+  const handleDownloadSamplePDF = () => {
+    const pdfContent = `
+EDUROAM INSTALLATION MANUAL
+===========================
+
+Welcome to eduroam India Setup Guide
+
+1. SYSTEM REQUIREMENTS
+   - Windows 10/11 or macOS 10.15+
+   - Active internet connection
+   - Valid institutional credentials
+
+2. INSTALLATION STEPS
+   - Download the configuration tool
+   - Run as administrator
+   - Enter your credentials
+   - Select your institution
+   - Complete the setup wizard
+
+3. TROUBLESHOOTING
+   - Check credentials
+   - Verify institution support
+   - Contact IT support if needed
+
+4. SUPPORT CONTACT
+   Email: support@eduroam.in
+   Phone: +91-11-2649-4640
+
+© 2024 eduroam India. All rights reserved.
+    `;
+
+    const blob = new Blob([pdfContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'eduroam-installation-manual.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Option 2: Check if PDF exists before downloading
+  const handleDownloadPDF = async () => {
+    try {
+      // First check if the PDF exists
+      const response = await fetch('/eduroam-installation-manual.pdf', { method: 'HEAD' });
+      
+      if (response.ok) {
+        // PDF exists, proceed with download
+        const link = document.createElement('a');
+        link.href = '/eduroam-installation-manual.pdf';
+        link.download = 'eduroam-installation-manual.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        // PDF doesn't exist, show message or use fallback
+        alert('PDF manual is currently unavailable. Please contact support@eduroam.in for assistance.');
+      }
+    } catch (error) {
+      console.error('Error checking PDF:', error);
+      // Fallback: provide alternative action
+      if (confirm('PDF manual is currently unavailable. Would you like to download a text version instead?')) {
+        handleDownloadSamplePDF();
+      }
+    }
+  };
+
+  // Option 3: Redirect to external URL where PDF is hosted
+  const handleRedirectToPDF = () => {
+    // Replace with your actual PDF URL (could be Google Drive, Dropbox, etc.)
+    window.open('https://example.com/path-to-your-pdf', '_blank');
+  };
+
   const quickLinks = [
-    { name: 'About eduroam', href: '#about', icon: Users },
-    { name: 'Participating Institutions', href: '#institutions', icon: Globe },
-    { name: 'Configuration Guide', href: '#guide', icon: FileText },
-    { name: 'Support Center', href: '#support', icon: Shield }
+    { name: 'About eduroam', href: '/about', icon: Users },
+    { name: 'Participating Institutions', href: '/institutions', icon: Globe },
+    { name: 'Configuration Guide', href: '/configurationPage', icon: FileText },
+    { name: 'Support Center', href: '/contact_us', icon: Shield }
   ];
 
   const resources = [
-    { name: 'Download Certificates', href: '#download', icon: Download },
-    { name: 'Network Statistics', href: '#stats', icon: FileText },
-    { name: 'Technical Documentation', href: '#docs', icon: ExternalLink },
-    { name: 'User Manual', href: '#manual', icon: FileText }
+    { 
+      name: 'Download Eduroam Installation Manual', 
+      action: handleDownloadPDF, // Use the check-and-download function
+      icon: Download, 
+      isAction: true 
+    },
+    { 
+      name: 'Sample Manual (Text)', 
+      action: handleDownloadSamplePDF, 
+      icon: FileText, 
+      isAction: true 
+    },
+    { name: 'Configuration Guide', href: '/configurationPage', icon: FileText },
+
+    { name: 'Technical Documentation',
+      action: handleDownloadPDF,
+      isAction: true ,
+      icon: ExternalLink },
   ];
 
   const policies = [
-    { name: 'Privacy Policy', href: '#privacy' },
-    { name: 'Terms of Service', href: '#terms' },
-    { name: 'Cookie Policy', href: '#cookies' },
-    { name: 'Accessibility Statement', href: '#accessibility' }
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Service', href: '/privacy' },
+    { name: 'Cookie Policy', href: '/privacy' },
+    // { name: 'Accessibility Statement', href: '#accessibility' }
   ];
 
   const socialLinks = [
@@ -60,6 +156,36 @@ const Footer = () => {
     { icon: Linkedin, href: '#linkedin', name: 'LinkedIn' },
     { icon: Youtube, href: '#youtube', name: 'YouTube' }
   ];
+
+  // Prevent hydration mismatch by not rendering dynamic content until mounted
+  if (!mounted) {
+    return (
+      <footer className="bg-gradient-to-b from-blue-900 to-blue-800 text-white">
+        <div className="max-w-6xl mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="lg:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center font-bold text-white">
+                  IN
+                </div>
+                <div>
+                  <h3 className="font-bold text-orange-400">eduroam India</h3>
+                  <p className="text-sm text-blue-200">Digital Education</p>
+                </div>
+              </div>
+              <p className="text-blue-200 mb-6 text-sm leading-relaxed">
+                Secure wireless network access across educational institutions nationwide. 
+                Part of India's Digital Education Initiative.
+              </p>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="bg-gradient-to-b from-blue-900 to-blue-800 text-white">
@@ -85,20 +211,21 @@ const Footer = () => {
               <div className="flex items-center gap-3 text-blue-200">
                 <Mail className="w-4 h-4 text-orange-400 flex-shrink-0" />
                 <a 
-                  href="mailto:support@eduroam.in" 
+                  href="mailto:eduroam@ernet.in" 
                   className="hover:text-white transition-colors"
                 >
-                  support@eduroam.in
+                  eduroam@ernet.in
                 </a>
               </div>
               <div className="flex items-center gap-3 text-blue-200">
                 <Phone className="w-4 h-4 text-orange-400 flex-shrink-0" />
-                <span>+91-11-2649-4640</span>
+                <span>011-22170641</span>
               </div>
               <div className="flex items-start gap-3 text-blue-200">
                 <MapPin className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
                 <span>
-                  Ministry of Communications & IT<br />
+                  Ministry of Electronics &<br />
+                  Information Technology,<br />
                   Government of India
                 </span>
               </div>
@@ -153,6 +280,20 @@ const Footer = () => {
             <div className={`space-y-3 ${openResources ? 'block' : 'hidden'} md:block`}>
               {resources.map((resource, index) => {
                 const IconComponent = resource.icon;
+                
+                if (resource.isAction) {
+                  return (
+                    <button
+                      key={index}
+                      onClick={resource.action}
+                      className="flex items-center gap-3 text-blue-200 hover:text-white transition-colors text-sm group w-full text-left"
+                    >
+                      <IconComponent className="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform duration-200" />
+                      <span>{resource.name}</span>
+                    </button>
+                  );
+                }
+                
                 return (
                   <a
                     key={index}
