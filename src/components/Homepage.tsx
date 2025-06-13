@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from 'next/link';
+import banner from '/banner.jpg';
 
 import {
   Building,
@@ -62,8 +63,8 @@ export default function HomePage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-r from-blue-900 to-blue-500 text-white py-20 px-6 md:px-20">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-10">
+<section className="relative w-full text-white py-20 px-6 md:px-20 bg-cover bg-center bg-no-repeat" 
+         style={{backgroundImage: "url('/banner3.jpg')"}}>        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-10">
           <div className="flex-1">
             <h1 className="text-4xl font-bold leading-tight mb-4">
               Connecting India's Academic Community
